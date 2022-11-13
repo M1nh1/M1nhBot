@@ -1,0 +1,13 @@
+{
+  "prefix": ",",
+  "token": "",
+  "mongodb": "mongodb+srv://M1nh:12344321@m1nhbot.fhmpkpt.mongodb.net/?retryWrites=true&w=majority",
+  "emoji": {
+    "play": "▶️",
+    "stop": "⏹️",
+    "queue": "📄",
+    "success": "☑️",
+    "repeat": "🔁",
+    "error": "❌"
+  }
+}
