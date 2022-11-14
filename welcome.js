@@ -4,14 +4,6 @@ const Schema = require('./Models/Welcome')
 
 const canvas = Canvas.createCanvas(1024, 500)
 const ctx = canvas.getContext('2d')
-//Canvas.loadImage('Kire.jpg').then(async (img) => {
-//    ctx.drawImage(img, 0, 0, 1024, 500)
-//    ctx.fillText("welcome", 360, 360)
-//    ctx.beginPath()
-//    ctx.arc(512, 166, 128, 0, Math.PI * 2, true)
-//    ctx.stroke()
-//    ctx.fill()
-//})
 
 module.exports = client => {
     client.on('guildMemberAdd', async member => {
@@ -39,10 +31,10 @@ module.exports = client => {
             ctx.beginPath()
             ctx.arc(512, 410, 60, 0, Math.PI * 2, true)
             ctx.closePath()
-            //await Canvas.loadImage(member.user.displayAvatarURL({ format: 'png' }))
-            //    .then(img => {
-            //        ctx.drawImage(img, 393, 47, 238, 238)
-            //    })
+            await Canvas.loadImage(member.user.displayAvatarURL({ format: 'png' }))
+                .then(img => {
+                    ctx.drawImage(img, 393, 47, 238, 238)
+                })
             let atta = new Discord.MessageAttachment(canvas.toBuffer(), `welcome-${member.id}.png`)
             try {
                 channel.send({ files: [atta] })

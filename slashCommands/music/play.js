@@ -14,7 +14,7 @@ module.exports = {
   ],
   inVoiceChannel: true,
   run: async (client, interaction) => {
-    interaction.deferReply({ fetchReply: true })
+    interaction.deferReply()
     let voiceChannel = interaction.member.voice.channel
     if (!voiceChannel) {
       return interaction.reply(
@@ -30,8 +30,8 @@ module.exports = {
     })
     const queue = client.distube.getQueue(interaction)
     const q = queue.songs
-      .map((song, i) => `${client.emotes.success} | Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user}`)
+      .map((song) => `${client.emotes.success} | Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user}`)
       .join('\n')
-    await interaction.editReply({ embeds: [new MessageEmbed().setColor('RED').setDescription(`${q}`)]})
+    await interaction.editReply({ embeds: [new MessageEmbed().setColor('RED').setDescription(`${q}`)] })
   }
 }

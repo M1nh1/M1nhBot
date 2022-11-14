@@ -20,7 +20,7 @@ module.exports = client => {
                 return interaction.reply({ content: "I don't have permissions for this.", ephemeral: true })
 
             if (!member.roles.cache.find((r) => r.id === data.Handlers))
-                return interaction.reply({content: "You cannot use these button!", ephemeral: true})
+                return interaction.reply({ content: "You cannot use these button!", ephemeral: true })
 
             const embed = new MessageEmbed().setColor("AQUA")
 
