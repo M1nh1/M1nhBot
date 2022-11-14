@@ -1,7 +1,7 @@
 {
   "prefix": ",",
   "token": "",
-  "mongodb": "mongodb+srv://M1nh:12344321@m1nhbot.fhmpkpt.mongodb.net/?retryWrites=true&w=majority",
+  "mongodb": "",
   "emoji": {
     "play": "▶️",
     "stop": "⏹️",
