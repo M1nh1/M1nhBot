@@ -1,7 +1,7 @@
 {
-  "prefix": ",",
-  "token": "",
-  "mongodb": "",
+  "prefix": "YOUR_PREFIX",
+  "token": "YOUR_DISCORD_TOKEN",
+  "mongodb": "YOUR_MONGO_LINK",
   "emoji": {
     "play": "▶️",
     "stop": "⏹️",
