@@ -4,7 +4,18 @@ const { SpotifyPlugin } = require('@distube/spotify')
 const { SoundCloudPlugin } = require('@distube/soundcloud')
 const { YtDlpPlugin } = require('@distube/yt-dlp')
 const client = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.MESSAGE_CONTENT], partials: ["MESSAGE", "CHANNEL", "REACTION"]
+  intents: [Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MESSAGES,
+    Intents.FLAGS.GUILD_MEMBERS,
+    Intents.FLAGS.GUILD_VOICE_STATES,
+    Intents.FLAGS.GUILD_PRESENCES,
+    Intents.FLAGS.MESSAGE_CONTENT
+  ],
+  partials: [
+    "MESSAGE",
+    "CHANNEL",
+    "REACTION"
+  ]
 })
 const config = require('./config.json')
 
