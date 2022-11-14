@@ -17,12 +17,12 @@ module.exports = {
     interaction.deferReply()
     let voiceChannel = interaction.member.voice.channel
     if (!voiceChannel) {
-      return interaction.reply(
+      return interaction.editReply(
         `${client.emotes.error} | You must be in a voice channel to use commands!`
       )
     }
     const query = interaction.options.getString('query')
-    if (!query) return interaction.reply(`${client.emotes.error} | Please enter a song url or query to search.`)
+    if (!query) return interaction.editReply(`${client.emotes.error} | Please enter a song url or query to search.`)
     await client.distube.play(interaction.member.voice.channel, query, {
       member: interaction.member,
       textChannel: interaction.channel,
@@ -30,7 +30,7 @@ module.exports = {
     })
     const queue = client.distube.getQueue(interaction)
     const q = queue.songs
-      .map((song) => `${client.emotes.success} | Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user}`)
+      .map((song) => `${client.emotes.success} | Added [${song.name}](${song.url}) - \`${song.formattedDuration}\` to the queue by ${song.user}`)
       .join('\n')
     await interaction.editReply({ embeds: [new MessageEmbed().setColor('RED').setDescription(`${q}`)] })
   }

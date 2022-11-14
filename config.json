@@ -8,6 +8,7 @@
     "queue": "📄",
     "success": "☑️",
     "repeat": "🔁",
+    "danger": "⚠",
     "error": "❌"
   }
 }

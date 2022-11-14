@@ -78,14 +78,14 @@ client.distube
   .on('addSong', (queue, song) =>
     queue.textChannel.send({
       embeds: [
-        new MessageEmbed().setColor('RED').setDescription(`${client.emotes.success} | Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user}`)]
+        new MessageEmbed().setColor('RED').setDescription(`${client.emotes.success} | Added [${song.name}](${song.url}) - \`${song.formattedDuration}\` to the queue by ${song.user}`)]
     }
     )
   )
   .on('addList', (queue, playlist) =>
     queue.textChannel.send({
       embeds: [
-        new MessageEmbed().setColor('RED').setDescription(`${client.emotes.success} | Added \`${playlist.name}\` playlist (${playlist.songs.length
+        new MessageEmbed().setColor('RED').setDescription(`${client.emotes.success} | Added [${playlist.name}](${playlist.url}) playlist (${playlist.songs.length
           } songs) to queue\n${status(queue)}`)]
     }
     )
@@ -104,7 +104,7 @@ client.distube
     let i = 0
     message.channel.send(
       `**Choose an option from below**\n${result
-        .map(song => `**${++i}**. ${song.name} - \`${song.formattedDuration}\``)
+        .map(song => `**${++i}**. [${song.name}](${song.url}) - \`${song.formattedDuration}\``)
         .join("\n")}\n*Enter anything else or wait 60 seconds to cancel*`
     )
   })
