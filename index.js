@@ -1,27 +1,28 @@
-const { Client, Intents, Collection, MessageEmbed, MessageActionRow, MessageButton } = require('discord.js')
+const { Client, Intents, Collection, MessageEmbed, MessageActionRow, MessageButton, PartialGroupDMChannel } = require('discord.js')
 const { DisTube } = require('distube')
 const { SpotifyPlugin } = require('@distube/spotify')
 const { SoundCloudPlugin } = require('@distube/soundcloud')
 const { YtDlpPlugin } = require('@distube/yt-dlp')
 const client = new Client({
-  intents: [Intents.FLAGS.GUILDS,
+  intents: [
+    Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_MESSAGES,
     Intents.FLAGS.GUILD_MEMBERS,
     Intents.FLAGS.GUILD_VOICE_STATES,
     Intents.FLAGS.GUILD_PRESENCES,
-    Intents.FLAGS.MESSAGE_CONTENT
+    Intents.FLAGS.MESSAGE_CONTENT,
+    Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+    Intents.FLAGS.GUILD_INTEGRATIONS,
+    Intents.FLAGS.GUILD_SCHEDULED_EVENTS
   ],
-  partials: [
-    "MESSAGE",
-    "CHANNEL",
-    "REACTION"
-  ]
-})
+  partials: [Object.keys(PartialGroupDMChannel)],
+});
 const config = require('./config.json')
+const { handleLogs } = require('./handleLogs')
 
 client.distube = new DisTube(client, {
   leaveOnStop: false,
-  emitNewSongOnly: true,
+  emitNewSongOnly: false,
   emitAddSongWhenCreatingQueue: false,
   emitAddListWhenCreatingQueue: false,
   savePreviousSongs: true,
@@ -78,14 +79,14 @@ client.distube
   .on('addSong', (queue, song) =>
     queue.textChannel.send({
       embeds: [
-        new MessageEmbed().setColor('RED').setDescription(`${client.emotes.success} | Added [${song.name}](${song.url}) - \`${song.formattedDuration}\` to the queue by ${song.user}`)]
+        new MessageEmbed().setColor('RED').setDescription(`${client.emotes.success} | Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user}`)]
     }
     )
   )
   .on('addList', (queue, playlist) =>
     queue.textChannel.send({
       embeds: [
-        new MessageEmbed().setColor('RED').setDescription(`${client.emotes.success} | Added [${playlist.name}](${playlist.url}) playlist (${playlist.songs.length
+        new MessageEmbed().setColor('RED').setDescription(`${client.emotes.success} | Added \`${playlist.name}\` playlist (${playlist.songs.length
           } songs) to queue\n${status(queue)}`)]
     }
     )
@@ -98,13 +99,13 @@ client.distube
   .on('searchNoResult', (message, query) =>
     message.channel.send(new MessageEmbed().setColor('RED').setDescription(`${client.emotes.error} | No result found for \`${query}\`!`))
   )
-  .on('finish', queue => queue.textChannel.send({ embeds: [new MessageEmbed().setColor('RED').setTitle('⚠️ Music queue ended').setFooter({ text: client.user.username, iconURL: client.user.displayAvatarURL({dynamic: true})}).setTimestamp()]}))
+  .on('finish', queue => queue.textChannel.send({ embeds: [new MessageEmbed().setColor('RED').setTitle('⚠️ Music queue ended').setFooter({ text: client.user.username, iconURL: client.user.displayAvatarURL({ dynamic: true }) }).setTimestamp()] }))
 
   .on("searchResult", (message, result) => {
     let i = 0
     message.channel.send(
       `**Choose an option from below**\n${result
-        .map(song => `**${++i}**. [${song.name}](${song.url}) - \`${song.formattedDuration}\``)
+        .map(song => `**${++i}**. ${song.name} - \`${song.formattedDuration}\``)
         .join("\n")}\n*Enter anything else or wait 60 seconds to cancel*`
     )
   })
@@ -114,6 +115,8 @@ client.distube
       `${client.emotes.error} | Invalid answer! You have to enter the number in the range of the results`
     )
   )
-  .on("searchDone", () => {})
+  .on("searchDone", () => { })
 
-client.login(config.token);
+client.login(config.token).then(() => {
+  handleLogs(client)
+})
