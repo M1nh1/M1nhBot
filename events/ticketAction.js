@@ -3,8 +3,9 @@ const discordTranscripts = require('discord-html-transcripts')
 const ticketSetup = require('../Models/TicketSetup')
 const ticketSchema = require('../Models/Ticket')
 
-module.exports = client => {
-    client.on('interactionCreate', async (interaction) => {
+module.exports = {
+    name: 'interactionCreate',
+    run: async (interaction, client) => {
         const { guild, member, customId, channel } = interaction
         const { ManageChannels, SendMessages } = Permissions
 
@@ -116,5 +117,5 @@ module.exports = client => {
                 }
             })
         }
-    })
+    }
 }

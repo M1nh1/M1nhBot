@@ -1,8 +1,9 @@
 const { MessageEmbed } = require('discord.js')
 const suggestionSchema = require('../Models/Suggestion')
 
-module.exports = client => {
-    client.on('interactionCreate', async (interaction) => {
+module.exports = {
+    name: 'interactionCreate',
+    run: async (interaction, client) => {
         const { member, guildId, customId, message } = interaction
 
         if(interaction.isButton()) {
@@ -35,5 +36,5 @@ module.exports = client => {
                 })
             }
         }
-    })
+    }
 }

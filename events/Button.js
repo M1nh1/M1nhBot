@@ -3,8 +3,10 @@ const verifySchema = require('../Models/Verify')
 const suggestionSchema = require('../Models/Suggestion')
 const embedLength = require('@discordjs/builders')
 
-module.exports = client => {
-    client.on('interactionCreate', async (interaction) => {
+module.exports = {
+    name: 'interactionCreate',
+        
+    run: async (interaction, client) => {
         if (interaction.isButton()) {
             const { guildId, guild, customId, member, message } = interaction
 
@@ -24,9 +26,13 @@ module.exports = client => {
 
                 interaction.reply({ embeds: [new MessageEmbed().setColor('GREEN').setDescription("✅ | You're now verified as a member")], ephemeral: true })
             } else if (customId == 'stop') {
+                if (!interaction.member.voice.channel) return interaction.reply({ embeds: [new MessageEmbed().setColor('RED').setDescription(`${client.emotes.error} | You need to join the voice channel first.`)], ephemeral: true })
+                if (interaction.member.voice.channel !== interaction.guild.me.voice.channel) return interaction.reply({ content: `${client.emotes.error} | You need to join same voice as bot`, ephemeral: true })
                 queue.stop()
                 interaction.reply({ content: `${client.emotes.success} | Stopped!`, ephemeral: true })
             } else if (customId == 'pause-resume') {
+                if (!interaction.member.voice.channel) return interaction.reply({ embeds: [new MessageEmbed().setColor('RED').setDescription(`${client.emotes.error} | You need to join the voice channel first.`)], ephemeral: true })
+                if (interaction.member.voice.channel !== interaction.guild.me.voice.channel) return interaction.reply({ content: `${client.emotes.error} | You need to join same voice as bot`, ephemeral: true })
                 if (!queue.paused) {
                     queue.pause()
                     interaction.reply({ content: `${client.emotes.success} | Paused!`, ephemeral: true })
@@ -37,16 +43,22 @@ module.exports = client => {
                     })
                 }
             } else if (customId == 'volume-down') {
+                if (!interaction.member.voice.channel) return interaction.reply({ embeds: [new MessageEmbed().setColor('RED').setDescription(`${client.emotes.error} | You need to join the voice channel first.`)], ephemeral: true })
+                if (interaction.member.voice.channel !== interaction.guild.me.voice.channel) return interaction.reply({ content: `${client.emotes.error} | You need to join same voice as bot`, ephemeral: true })
                 let volumedown = queue.volume
                 volumedown = volumedown - 10
                 queue.setVolume(volumedown)
                 interaction.reply({ content: `${client.emotes.success} | Volume set to \`${volumedown}\``, ephemeral: true })
             } else if (customId == 'volume-up') {
+                if (!interaction.member.voice.channel) return interaction.reply({ embeds: [new MessageEmbed().setColor('RED').setDescription(`${client.emotes.error} | You need to join the voice channel first.`)], ephemeral: true })
+                if (interaction.member.voice.channel !== interaction.guild.me.voice.channel) return interaction.reply({ content: `${client.emotes.error} | You need to join same voice as bot`, ephemeral: true })
                 let volumeup = queue.volume
                 volumeup = volumeup + 10
                 queue.setVolume(volumeup)
                 interaction.reply({ content: `${client.emotes.success} | Volume set to \`${volumeup}\``, ephemeral: true })
             } else if (customId == 'skip') {
+                if (!interaction.member.voice.channel) return interaction.reply({ embeds: [new MessageEmbed().setColor('RED').setDescription(`${client.emotes.error} | You need to join the voice channel first.`)], ephemeral: true })
+                if (interaction.member.voice.channel !== interaction.guild.me.voice.channel) return interaction.reply({ content: `${client.emotes.error} | You need to join same voice as bot`, ephemeral: true })
                 try {
                     const song = await queue.skip()
                     interaction.reply({ content: `${client.emotes.success} | Skipped! Now playing: \n${song.name}`, ephemeral: true })
@@ -57,5 +69,4 @@ module.exports = client => {
             }
         }
     }
-    )
 }

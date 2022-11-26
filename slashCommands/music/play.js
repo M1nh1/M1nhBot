@@ -23,15 +23,11 @@ module.exports = {
     }
     const query = interaction.options.getString('query')
     if (!query) return interaction.reply(`${client.emotes.error} | Please enter a song url or query to search.`)
-    await client.distube.play(interaction.member.voice.channel, query, {
+    interaction.reply({ embeds: [new MessageEmbed().setColor('RED').setDescription(`${client.emotes.success} | Searching for ${query}}`)] })
+    client.distube.play(interaction.member.voice.channel, query, {
       member: interaction.member,
       textChannel: interaction.channel,
       interaction
     })
-    const queue = client.distube.getQueue(interaction)
-    const q = queue.songs
-      .map((song) => `${client.emotes.success} | Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user}`)
-      .join('\n')
-    await interaction.editReply({ embeds: [new MessageEmbed().setColor('RED').setDescription(`${q}`)] })
   }
 }

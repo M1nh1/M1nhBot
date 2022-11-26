@@ -2,8 +2,9 @@ const { MessageEmbed, MessageButton, MessageActionRow, Permissions } = require('
 const TicketSetup = require('../Models/TicketSetup');
 const ticketSchema = require('../Models/Ticket')
 
-module.exports = client => {
-    client.on('interactionCreate', async (interaction) => {
+module.exports = {
+    name: 'interactionCreate',
+    run: async (interaction, client) => {
         if (interaction.isButton()) {
             const { guild, member, customId, channel } = interaction
             const { VIEW_CHANNEL, SEND_MESSAGES, MANAGE_CHANNELS, READ_MESSAGE_HISTORY } = Permissions
@@ -72,5 +73,5 @@ module.exports = client => {
                 interaction.reply({ content: `Succesfully created a ticket.`, ephemeral: true })
             })
         }
-    })
+    }
 }
