@@ -1,7 +1,7 @@
 {
-  "prefix": ",",
-  "token": "MTAzNTA0NTYxOTI4MDEzNDE0NA.GAUkmR.sE9aQ1jRHk4QqC6tV9bxUkM84aM-mPZb2Bfgsk",
-  "mongodb": "mongodb+srv://Minh:12344321@m1nhbot.joscswj.mongodb.net/?retryWrites=true&w=majority",
+  "prefix": "YOUR_PREFIX",
+  "token": "YOUR_TOKEN",
+  "mongodb": "YOUR_MONGODB",
   "emoji": {
     "play": "▶️",
     "stop": "⏹️",
